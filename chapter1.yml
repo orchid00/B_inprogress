@@ -49,26 +49,23 @@ you can install and load it at the same time using this call:
 
     source("https://bioconductor.org/biocLite.R") 
     
-With this line of code we had already installed an loaded the ‘BiocInstaller’ package 
-for you. Notice that you don't need to call `library()` to load it. To check the loaded
-packages use
+We had already installed an loaded the ‘BiocInstaller’ package for you. Notice that you 
+don't need to call `library()` to load it. To check which are the loaded packages use:
 
     search()
 
-Now, as you might know, Bioconductor is in constant development. Hence, checking the version 
-is very important to keep documentation of your analysis in order to be reproducible. 
-You can check the version of Bioconductor using:          
+Because Bioconductor is in constant development we are better off documenting the version 
+that we are currently using. You can check the version of Bioconductor using:          
 
     BiocInstaller::biocVersion()
          
- or, if BioCInstaller is already loaded (like for thi example) you can type directly 
+ or, if BioCInstaller is already loaded (like on this exercise) you can type directly 
  
     biocVersion()
     
 `@instructions`
 
 Your task is to check both options in the console, and find out the version of biocInstaller.
-Do you see any differences?
 
 `@hint`
 
