@@ -91,28 +91,7 @@ Test each line of code from the text, one at the time.
 ```
 ---
 
-## The role of S4 in Bioconductor
-
-```yaml
-type: VideoExercise
-lang: r
-xp: 50
-skills: 1
-key: 5108fbe7af
-```
-
-S4 is a formal object-oriented programming (OOP) system. You will be introduced to the benefits of using S4 and inheritance. A short description about the framework of S4 components (class, function and methods). Later, you will be shown how to initialize and set arguments.
-
-`@video_link`
-
-//player.vimeo.com/video/154783078
-
-`@video_hls`
-
-//videos.datacamp.com/transcoded/000_placeholders/v1/hls-temp.master.m3u8
----
-
-## Class definition
+## BiocLite to load packages
 
 ```yaml
 type: NormalExercise
@@ -122,7 +101,25 @@ skills: 1
 key: 58d4130bd8
 ```
 
+If you would like to research full genomes, or part of a genome and its characteristics,
+The package BSgenome comes in handy.
+
+We have installed it for you using 
+
+          source("https://bioconductor.org/biocLite.R")
+          biocLite("BSgenome")
+
+Any bioconductor package can be installed this way, and then it needs to be loaded using library().
+
+Y
+
+
 `@instructions`
+          Now it is your turn to load the package and check the version, in the
+          same way that you will check other CRAN packages
+
+
+
 We can define an S4 class using the function `setClass()` and then we can initiate the class with the function `new()`. In the following example:
 setClass("welcoming",
          representation = representation(phrase = "character"),
@@ -161,6 +158,29 @@ new("welcoming", phrase = "Bienvenido!")
 
 ```
 ---
+
+
+## The role of S4 in Bioconductor
+
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: 5108fbe7af
+```
+
+S4 is a formal object-oriented programming (OOP) system. You will be introduced to the benefits of using S4 and inheritance. A short description about the framework of S4 components (class, function and methods). Later, you will be shown how to initialize and set arguments.
+
+`@video_link`
+
+//player.vimeo.com/video/154783078
+
+`@video_hls`
+
+//videos.datacamp.com/transcoded/000_placeholders/v1/hls-temp.master.m3u8
+---
+
 
 ## Creating functions and methods
 
