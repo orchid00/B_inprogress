@@ -33,34 +33,39 @@ BSgenome package to start the exploring genomic dataset bit by bit.
 //videos.datacamp.com/transcoded/000_placeholders/v1/hls-temp.master.m3u8
 ---
 
-## Which function should be used to install a Bioconductor package?
+## BiocInstaller
 
 ```yaml
-type: MultipleChoiceExercise
+type:  NormalExercise
 lang: r
 xp: 50
 skills: 1
 key: 8a75737abd
 ```
 
+If you check any Bioconductor package page, you will find out that every installation 
+requires the script biocLite.R. The main purpose of source("https://bioconductor.org/biocLite.R") 
+is to install and attach the ‘BiocInstaller’ package. For this course the BiocInstaller
+package has been already installed for you.
 
-1. install.packages("package")
-2. source("https://bioconductor.org/biocLite.R")
-     biocLite("package")
-3. import("package")
-4. library(package)
+Now, as you might have guessed, Bioconductor is in constant development and checking the version 
+is very important to keep documentation of your analysis to be reproducible. You can check the
+version of Bioconductor using:          
 
-Answer: 2
-The main purpose of
-source("https://bioconductor.org/biocLite.R") is to install and attach the ‘BiocInstaller’ package.
-The BiocInstaller package serves as the primary way to identify the version of Bioconductor, using
-biocLite().
-
+    BiocInstaller::biocVersion()
+         
+ or 
+ 
+    biocVersion()
+    
 `@instructions`
+
+Your task is to check both options in the console, and find out the version of biocInstaller.
 
 
 `@hint`
 
+Test each line of code from the text, one at the time.
 
 `@pre_exercise_code`
 
@@ -71,6 +76,13 @@ biocLite().
 `@sct`
 
 ```{r}
+
+# the long version to check the version of BiocInstaller
+
+
+
+# The sort version to check the version of BiocInstaller
+
 
 ```
 ---
