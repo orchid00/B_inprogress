@@ -1,12 +1,11 @@
 ---
 title: What is Bioconductor?
 description: >-
-  In this chapter you will get hands on with Bioconductor. Bioconductor is the specialized 
-  repository for bioinformatics software developed and manintained by the R community. You
-  will learn how to install and use packages, for various kinds of analyses. You will also learn
-  about how objects and functions work within Bioconductor, as many of these
-  inherit from others using S4. Lastly, we are going to use a real genomic
-  dataset to explore some Bioconductor methods.
+  In this chapter you will get hands-on with Bioconductor. Bioconductor is the specialized 
+  repository for bioinformatics software, developed and manintained by the R community. You
+  will learn how to install and use packages, for various kinds of analyses. You will be 
+  introduced to S4 objects and functions, as most packages within Bioconductor inherit from S4.
+  Lastly, we are going to use a real genomic dataset to explore biological data using Bioconductor packages. 
 ---
 
 ## Introduction to the Bioconductor Project
