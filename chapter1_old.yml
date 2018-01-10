@@ -1,0 +1,330 @@
+---
+title: What is Bioconductor?
+description: >-
+  In this chapter you will learn about the Bioconductor project, how
+  to install and use packages for various kinds of analyses. You will also learn
+  the main functionality of how a object and functions in Bioconductor work and
+  inherit from others, using S4. Lastly, we are going to use a real genomic
+  dataset to explore some Bioconductor methods.
+---
+
+## Introduction to the Bioconductor Project
+
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: 8445cb19c9
+```
+
+This video is a short intro to the Bioconductor project. You will learn about the basic analyses that you are able to perform using Bioconductor. Also, a short intro on how to install and use packages for various kinds of analyses.
+
+`@video_link`
+
+//player.vimeo.com/video/154783078
+
+`@video_hls`
+
+//videos.datacamp.com/transcoded/000_placeholders/v1/hls-temp.master.m3u8
+---
+
+## Which function should be used to install a Bioconductor package?
+
+```yaml
+type: MultipleChoiceExercise
+lang: r
+xp: 50
+skills: 1
+key: 8a75737abd
+```
+
+
+1. install.packages("package")
+2. source("https://bioconductor.org/biocLite.R")
+     biocLite("package")
+3. import("package")
+4. library(package)
+
+Answer: 2
+The main purpose of
+source("https://bioconductor.org/biocLite.R") is to install and attach the ‘BiocInstaller’ package.
+The BiocInstaller package serves as the primary way to identify the version of Bioconductor, using
+biocLite().
+
+`@instructions`
+
+
+`@hint`
+
+
+`@pre_exercise_code`
+
+```{r}
+
+```
+
+`@sct`
+
+```{r}
+
+```
+---
+
+## The role of S4 in Bioconductor
+
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: 5108fbe7af
+```
+
+S4 is a formal object-oriented programming (OOP) system. You will be introduced to the benefits of using S4 and inheritance. A short description about the framework of S4 components (class, function and methods). Later, you will be shown how to initialize and set arguments.
+
+`@video_link`
+
+//player.vimeo.com/video/154783078
+
+`@video_hls`
+
+//videos.datacamp.com/transcoded/000_placeholders/v1/hls-temp.master.m3u8
+---
+
+## Class definition
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: 58d4130bd8
+```
+
+`@instructions`
+We can define an S4 class using the function `setClass()` and then we can initiate the class with the function `new()`. In the following example:
+setClass("welcoming",
+         representation = representation(phrase = "character"),
+         prototype = prototype(phrase = "Welcome!"))
+
+If you want to initiate the class welcoming with default parameters, you will write
+new("welcoming")
+
+If you would like to add a new phrase to this class you could write your own value for phrase:
+new("welcoming", phrase = "Bienvenido!")
+
+`@hint`
+
+
+`@pre_exercise_code`
+
+```{r}
+
+```
+
+`@sample_code`
+
+```{r}
+
+```
+
+`@solution`
+
+```{r}
+
+```
+
+`@sct`
+
+```{r}
+
+```
+---
+
+## Creating functions and methods
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: 23be4e5dbd
+```
+
+To create functions and methods we will use to useful functions `setGeneric` and `setMethod`
+
+setGeneric function arguments
+* name – the generic function name.
+* def – the generic definition, typically of the form
+function(<<ARG_LIST>>) standardGeneric("<<GEN_NAME>>"))
+* signature – the method dispatch signature.
+
+setMethod function arguments
+* f – the generic function name.
+* signature – the mapping of arguments in dispatch signature
+to classes.
+* definition – the method definition.
+
+Given the method definition `words`, how would you invoque the method?
+
+Answer:
+words(new("Greeting"))
+
+`@instructions`
+
+
+`@hint`
+
+
+`@pre_exercise_code`
+
+```{r}
+
+```
+
+`@sample_code`
+
+```{r}
+
+```
+
+`@solution`
+
+```{r}
+
+```
+
+`@sct`
+
+```{r}
+
+```
+---
+
+## Introduction to biology of genomic datasets 
+
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: 3169924aca
+```
+
+What is a genome? https://ghr.nlm.nih.gov/primer/hgp/genome
+How is this genome information stored?
+For the next exercise we are going to explore a public genome repository, using the BSgenome package.
+
+`@video_link`
+
+//player.vimeo.com/video/154783078
+
+`@video_hls`
+
+//videos.datacamp.com/transcoded/000_placeholders/v1/hls-temp.master.m3u8
+---
+
+##  BSgenome.Hsapiens.UCSC.hg38
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: bae59d3a13
+```
+
+The BSgenome package provides support for genomes. In Bioconductor, we have special classes for each genome, because some chromosomes can be big. Genomics and big data are two related topics. For example, most genomes can take up several GBs of memory.
+If you wanted to explore the available genomes from this package:
+available.genomes()
+
+Let's explore the human genome (this has been already installed and loaded for you)
+genomeHs <- BSgenome.Hsapiens.UCSC.hg38
+head(seqnames(genomeHs))
+head(seqlengths(genomeHs))
+
+We can test each chromosome
+genomeHs$chr1
+nchar(genomeHs$chr1)
+
+There is a useful function called letterFrequency which we can use in a sequence, how would you check the frequency of CG in chromosome 1?
+letterFrequency(genomeHs$chr1, "CG") 
+That will give you the counts. If you wanted to see the percentage, you need to use  as.prob = TRUE.
+To check if you are correct before submitting the answer should be about 38%
+
+Answer:
+letterFrequency(genomeHs$chr1, "CG", as.prob = TRUE)
+
+
+`@instructions`
+
+
+`@hint`
+
+
+`@pre_exercise_code`
+
+```{r}
+
+```
+
+`@sample_code`
+
+```{r}
+
+```
+
+`@solution`
+
+```{r}
+
+```
+
+`@sct`
+
+```{r}
+
+```
+---
+
+## bsapply from BSgenome
+
+```yaml
+type: MultipleChoiceExercise
+lang: r
+xp: 50
+skills: 1
+key: b347f25e79
+```
+
+Let's now investigate the function bsapply from the BSgenome package. This is a function similar to apply which helps you iterate to each chromosome in a genome.
+
+In the following example, we are iterating through each chromosome of genomeHs to count the frequency of CG
+
+param <- new("BSParams", X = genomeHs, FUN = letterFrequency, simplify = TRUE)
+bsapply(param, letters = "GC")
+
+Q:  is this showing you the counts or percentages of letterFrequency for each chromosome?
+@solution
+Answer:
+counts
+
+
+`@instructions`
+
+
+`@hint`
+
+
+`@pre_exercise_code`
+
+```{r}
+
+```
+
+`@sct`
+
+```{r}
+
+```
