@@ -18,7 +18,11 @@ skills: 1
 key: 8445cb19c9
 ```
 
-This video is a short intro to the Bioconductor project. You will learn about the basic analyses that you are able to perform using Bioconductor. Also, a short intro on how to install and use packages for various kinds of analyses.
+In this video a short intro of Bioconductor project will be given. You
+will learn about the basic analyses that you are able to perform using
+the Bioconductor project. Also, a short intro on how to install and
+use packages for various kinds of analyses. Initially, we will use the
+BSgenome package to start the exploring genomic dataset bit by bit.
 
 `@video_link`
 
