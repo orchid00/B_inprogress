@@ -254,19 +254,33 @@ getClass(genome1)
 
 ```
 ---
-## Introduction to biology of genomic datasets
+## Introducing biology of genomic datasets
 
-      - type: VideoExercise
-        title: 'Introduction to biology of genomic datasets '
-        content: >-
-          What is a genome? https://ghr.nlm.nih.gov/primer/hgp/genome
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: 
+```
 
-          How is this genome information stored?
+What is a genome?
+How is the genome information stored?
+We are going to explore a public genome repository, using the BSgenome package.
+The selected genome is the yeast genome, also called *S. Cerevisiae*
 
-          For the next exercise we are going to explore a public genome
-          repository, using the BSgenome package.
+`@video_link`
 
-          Exploring the yeast genome, also called S. cerevisiae
+//player.vimeo.com/video/154783078
+
+`@video_hls`
+
+//videos.datacamp.com/transcoded/000_placeholders/v1/hls-temp.master.m3u8
+---
+
+## 
+
+     
       - type: NormalExercise
         title: Calling methods and other attributes
         content: >-
