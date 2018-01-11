@@ -218,9 +218,7 @@ The answer is TRUE
 @instructions`
 
   Use the function getClass to find out more information about the BSgenome that we have loaded for you.
-  
- 
-          
+        
 `@hint`
 
 check out 
@@ -278,38 +276,99 @@ The selected genome is the yeast genome, also called *S. Cerevisiae*
 //videos.datacamp.com/transcoded/000_placeholders/v1/hls-temp.master.m3u8
 ---
 
-## 
+## Accessors - accessing functionality of an object
 
-     
-      - type: NormalExercise
-        title: Calling methods and other attributes
-        content: >-
-          An accessor is a method for accessing data in an object usually an
-          attribute of that object.
+```yaml
+type: NormalExercise
+lang: r
+xp: 50
+skills: 1
+key: 
+```   
 
-          Accessor are usually functions that start with get
+Since we are working with objects, these objects have characteristics that we might find useful 
+to explore. We can access these characteristics/ features / functionalities or however you want
+to call it using **accessors**.
 
-          For example,
+The object genome1 is a BSgenome object, which is linked to the GenomeDescription class and object.
+Thanks to this, all the accessor methods for GenomeDescription objects can be used on
+any BSgenome object. To see a list of the accessor methods, find more information here:  
+https://www.rdocumentation.org/packages/GenomeInfoDb/versions/1.8.3/topics/GenomeDescription-class
 
-          How to retrieve sequence information from one section of a chromosome
+For example, we are working with the yeat genome and we can ask the accessor organism.
+Which genome is in use? Note this will give you the latin name of the organism
 
+         organism(genome1)
 
-          getSeq(genome1, "chrI", 100, 150)
-
-          ?getSeq (from BSgenome package) for more info..
-
-
-          ## Get the first 20 bases of each chromosome:
-
-          getSeq(genome1, end = 20)
-
-
-          ## Get the last 20 bases of each chromosome:
-
-          getSeq(genome1, start = -20)
+To see the names of the sequences of genome1 we can use the accesor getnames()
 
 
-          organism(genome1)
+         seqnames(genome1)
+
+Once we know the sequence names, we can also select the start and end positions of a sequence. 
+This helps us to filter sequences. Or in other words, to retrieve sequence information from one 
+section of a chromosome. Here we will select chromosome I from positon 100 up to position 150.
+
+`@sample_code`
+
+```{r}
+getSeq(genome1, "chrI", 100, 150)
+```     
+For more information read ?getSeq (from the BSgenome package).
+
+@instructions`
+
+Use the function getSeq to find the first 20 bases of each chromosome
+        
+`@hint`
+
+- you only need to specify the end of the sequence
+- If ‘names’ is missing, then ‘seqnames(x)’ is used.
+- start of the sequence will start from 1 as default
+- to see the last part of any vector you can use the negative notation
+(minus) here this filter should be provided in the start
+
+`@pre_exercise_code`
+
+```{r}
+# Get the first 20 bases of each chromosome
+
+# Get the last 20 bases of each chromosome
+
+```
+
+`@sample_code`
+
+```{r}
+# Find out more about genome1
+
+```
+
+`@solution`
+
+```{r}
+# Get the first 20 bases of each chromosome
+getSeq(genome1, end = 20)
+
+# Get the last 20 bases of each chromosome
+getSeq(genome1, start = -20)
+
+```
+
+`@sct`
+
+```{r}
+
+```
+---
+
+##  Other genomes
+
+
+        
+
+
+  
 
 
           methods
