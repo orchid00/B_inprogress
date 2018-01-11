@@ -164,11 +164,6 @@ packageVersion("BSgenome")
 ```
 ---
 
-`@sct`
-
-```{r}
-
-```
 ## The role of S4 in Bioconductor
 
 ```yaml
@@ -195,32 +190,72 @@ methods). Later, you will be shown how to initialize and set arguments.
 
 ## Interaction with clasess
 
-      - type: NormalExercise
-        title: Interaction with clasess
-        content: >
-          Let's say we have an object called genome1, we can ask if this object
-          is S4
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: 
+```
+Let's say we have an object called genome1, this is an object of class BSgenome. You can check with 
 
+          class(genome1)
+      
+To investigate the possibilities of S4 objects, we can ask if this object is S4
 
           isS4(genome1)
 
+The answer is TRUE
 
-          The answer is TRUE
+S4 formally defines the representation and inheritance for each class, so we can check that too
 
-          We can also get more information of its class with the class function
+          isClass(genome1)
+       
+The answer is TRUE
+          
+          getClass(genome1)
+                    
+@instructions`
 
-          class(genome1)
+  Use the function getClass to find out more information about the BSgenome that we have loaded for you.
+  
+ 
+          
+`@hint`
 
+check out 
+?getClass
 
-          Like with other datasets that you have used before you can also check
-          the structure of this object
+`@pre_exercise_code`
 
-          class(genome1)
+```{r}
+# we have installed the package BSgenome for you
+# and saved an R object called genome1
+```
 
+`@sample_code`
 
-          or 
+```{r}
+# Find out more about genome1
 
-          getClass(class(genome1))
+```
+
+`@solution`
+
+```{r}
+# Find out more about genome1
+getClass(genome1)
+
+```
+
+`@sct`
+
+```{r}
+
+```
+---
+## Introduction to biology of genomic datasets
+
       - type: VideoExercise
         title: 'Introduction to biology of genomic datasets '
         content: >-
