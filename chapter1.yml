@@ -104,7 +104,7 @@ key: 58d4130bd8
 If you would like to research full genomes, or part of a genome and its characteristics,
 The package BSgenome comes in handy.
 
-We have installed it for you using 
+We have installed it for you, using 
 
           source("https://bioconductor.org/biocLite.R")
           biocLite("BSgenome")
@@ -120,12 +120,12 @@ like packages from CRAN.
 
 check out 
 ?library - to load
-?packageVersion() or ?sessionInfo() to check the version
+?packageVersion to check the version
 
 `@pre_exercise_code`
 
 ```{r}
-# we have installed the package for you
+# we have installed the package BSgenome for you
 ```
 
 `@sample_code`
@@ -135,6 +135,7 @@ check out
 
 # Read the lines that start with Loading required package: 
 # Are there many packages?
+# no code needed here
 
 # Finally, check the version of the package
 
@@ -149,6 +150,7 @@ library(BSgenome)
 
 # Read the lines that start wit Loading required package: 
 # Are there many packages?
+# no code neded here
 
 # Finally, check the version of the package
 packageVersion("BSgenome")
