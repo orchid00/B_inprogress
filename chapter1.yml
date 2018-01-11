@@ -169,15 +169,32 @@ packageVersion("BSgenome")
 ```{r}
 
 ```
+## The role of S4 in Bioconductor
 
-      - type: VideoExercise
-        title: The role of S4 in Bioconductor
-        content: >-
-          S4 is a formal object-oriented programming OOP system. You will be
-          introduced to the benefits of using S4 and inheritance. A short
-          description about the framwork of S4 components (class, function and
-          methods). Later, you will be shown how to initialize and set
-          arguments.
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: 
+```
+
+S4 is a formal object-oriented programming (OOP) system. You will be
+introduced to the benefits of using S4 and inheritance. A short
+description about the framwork of S4 components (class, function and
+methods). Later, you will be shown how to initialize and set arguments.
+
+`@video_link`
+
+//player.vimeo.com/video/154783078
+
+`@video_hls`
+
+//videos.datacamp.com/transcoded/000_placeholders/v1/hls-temp.master.m3u8
+---
+
+## Interaction with clasess
+
       - type: NormalExercise
         title: Interaction with clasess
         content: >
