@@ -364,63 +364,92 @@ getSeq(genome1, start = -20)
 
 ##  Other genomes
 
-
-        
-
-
-  
-
-
-          methods
-      - type: NormalExercise
-        title: BSgenome.Scerevisiae.UCSC.sacCer3
-        content: >-
-          The BSgenome package provides support for various genomes. In
-          Bioconductor, we have special classes for each genome, because some
-          chromosomes can be big. Genomics and big data are two related topics.
-          For example, most genomes can take up several GBs of memory. 
-
-
-          If you wanted to explore the available genomes from this package:
+```yaml
+type: MultipleChoice
+lang: r
+xp: 50
+skills: 1
+key: 
+```  
+The BSgenome package provides support for various genomes. Bioconductor 
+has saved each genome as a different package that inherits from BSgenome.
+If you want to explore the available BSgenome data packages check:
 
           available.genomes()
 
+You will see that there are many. Each of these data packages contains the genome information
+of an organism, and sometimes different versions. Because some genomes are usually big (Genomics 
+and big data are two related topics). We will keep using the S. cervisiae genome because of its
+small genome size. We loaded it again using the following code:
 
-          Let's explore the yeast genome (this has been already installed and
-          loaded for you)
+         yeaStGenome <- getBSgenome( "BSgenome.Scerevisiae.UCSC.sacCer3")
 
-          yeastGenome <- BSgenome.Scerevisiae.UCSC.sacCer3
+We can explore this using seqinfo(), seqnames() or seqlengths() common accessors
 
-          head(seqnames(yeastGenome))
+          seqnames(yeastGenome)
+          seqinfo(yeastGenome)
+          seqlengths(yeastGenome)
 
-          head(seqlengths(yeastGenome))
+We can also have a look at each chromosome by name
 
+          yeastGenome$chrI
+          
 
-          We can also look at each chromosome
+`@instructions`
 
-          yeastGenome$chr1
+Using one of the mentioned functions check which chromosome of the yeastGenome is the shortest one
 
-          nchar(yeastGenome$chr1)
-      - type: NormalExercise
-        title: Letter frequency
-        content: >-
-          There is a useful function called letterFrequency which we can use in
-          a sequence, how would you check the frequency of CG in chromosome I?
+`@hint`
+
+check out 
+?seqinfo
+?seqlengths
+?sort
+?order
+
+`@solution`
+
+```{r}
+sort(seqlengths(yeastGenome))
+```
+---
+
+## Letter frequency
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: 
+```
+
+There is a useful function called letterFrequency which we can use in
+a sequence to find out information about frequency.
+How would you check the frequency of CG in chromosome I?
 
           letterFrequency(yeastGenome$chrI, "CG") 
 
-          That will give you the counts. If you wanted to see the percentage
-          instead, you need to use the attribute  as.prob = TRUE.
+That will give you the counts. If you wanted to see the percentage
+instead, you need to use the attribute as.prob = TRUE. For more information
+always check ?letterFrequency
 
-          To check if you are correct before submitting the answer should be
-          about %
+`@instructions`
 
+      What is the percentage og CG frequency in chrmI ?
+          
+`@hint`
 
-          Note fill in the blanks
+To check if you are correct before submitting the answer should be
+about 39%
 
-          Answer:
+check ?letterFrequency is you still have doubts
+          
+`@solution`
 
+```{r}
           letterFrequency(yeastGenome$chrI, "CG", as.prob = TRUE)
+```
       - type: MultipleChoiceExercise
         title: bsapply from BSgenome
         content: >
