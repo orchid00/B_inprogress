@@ -8,6 +8,7 @@ description: >-
   Lastly, we are going to use a real genomic dataset to explore biological data using Bioconductor packages. 
 ---
 
+
 ## Introduction to the Bioconductor Project
 
 ```yaml
@@ -15,14 +16,16 @@ type: VideoExercise
 lang: r
 xp: 50
 skills: 1
-key: 8445cb19c9
+key: 4117a8f582
 ```
+
 
 In this video a short intro of Bioconductor project will be given. You
 will learn about the basic analyses that you are able to perform using
 the Bioconductor project. Also, a short intro on how to install and
 use packages for various kinds of analyses. As example, we will use the
 BSgenome package to start the exploring genomic dataset bit by bit.
+
 
 `@video_link`
 
@@ -31,16 +34,20 @@ BSgenome package to start the exploring genomic dataset bit by bit.
 `@video_hls`
 
 //videos.datacamp.com/transcoded/000_placeholders/v1/hls-temp.master.m3u8
----
 
+`@projector_key`
+1f556123a0d05c2c0933608ef806fd8b
+
+---
 ## BiocInstaller
 
+
 ```yaml
-type:  NormalExercise
+type: NormalExercise
 lang: r
-xp: 50
+xp: 100
 skills: 1
-key: 8a75737abd
+key: 827cd49817
 ```
 
 If you check any Bioconductor package page, you will find out that every installation 
@@ -53,6 +60,7 @@ We had already installed an loaded the ‘BiocInstaller’ package for you. Noti
 don't need to call `library()` to load it. To check which are the loaded packages use:
 
     search()
+
 
 Because Bioconductor is in constant development we are better off documenting the version 
 that we are currently using. You can check the version of Bioconductor using:          
@@ -77,16 +85,26 @@ Test each line of code from the text, one at the time.
 
 ```
 
-`@sct`
+`@sample_code`
 
 ```{r}
-
 # the long version to check the version of BiocInstaller
 
 
 
 # The sort version to check the version of BiocInstaller
 
+```
+
+`@solution`
+
+```{r}
+
+```
+
+`@sct`
+
+```{r}
 
 ```
 ---
@@ -98,7 +116,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
-key: 58d4130bd8
+key: ddfd518202
 ```
 
 If you would like to research full genomes, or part of a genome and its characteristics,
@@ -108,6 +126,10 @@ We have installed it for you, using
 
           source("https://bioconductor.org/biocLite.R")
           biocLite("BSgenome")
+TIP:
+?library
+?sessionInfo
+
 
 Any bioconductor package can be installed this way, and then it needs to be loaded using library().
 like packages from CRAN.
@@ -165,6 +187,26 @@ packageVersion("BSgenome")
 ---
 
 ## The role of S4 in Bioconductor
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: 7bdd71d4b0
+```
+
+S4 is a formal object-oriented programming OOP system. You will be introduced to the benefits of using S4 and inheritance. A short description about the framwork of S4 components (class, function and methods). Later, you will be shown how to initialize and set arguments.
+
+`@video_link`
+
+//player.vimeo.com/video/154783078
+
+`@video_hls`
+
+//videos.datacamp.com/transcoded/000_placeholders/v1/hls-temp.master.m3u8
+---
+
+## Interaction with clasess
 
 ```yaml
 type: VideoExercise
@@ -195,7 +237,7 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
-key: 
+key: c70a0b2407
 ```
 Let's say we have an object called genome1, this is an object of class BSgenome. You can check with 
 
@@ -259,13 +301,16 @@ type: VideoExercise
 lang: r
 xp: 50
 skills: 1
-key: 
+key: f6c36f59bf
 ```
 
-What is a genome?
-How is the genome information stored?
 We are going to explore a public genome repository, using the BSgenome package.
 The selected genome is the yeast genome, also called *S. Cerevisiae*
+
+What is a genome? https://ghr.nlm.nih.gov/primer/hgp/genome
+How is this genome information stored?
+For the next exercise we are going to explore a public genome repository, using the BSgenome package.
+Exploring the yeast genome, also called S. cerevisiae
 
 `@video_link`
 
@@ -277,13 +322,12 @@ The selected genome is the yeast genome, also called *S. Cerevisiae*
 ---
 
 ## Accessors - accessing functionality of an object
-
 ```yaml
 type: NormalExercise
 lang: r
 xp: 50
 skills: 1
-key: 
+key: bd7a1f8636
 ```   
 
 Since we are working with objects, these objects have characteristics that we might find useful 
@@ -302,6 +346,128 @@ Which genome is in use? Note this will give you the latin name of the organism
 
 To see the names of the sequences of genome1 we can use the accesor getnames()
 
+An accessor is a method for accessing data in an object usually an attribute of that object.
+Accessor are usually functions that start with get
+For example,
+How to retrieve sequence information from one section of a chromosome
+
+getSeq(genome1, "chrI", 100, 150)
+?getSeq (from BSgenome package) for more info..
+
+## Get the first 20 bases of each chromosome:
+getSeq(genome1, end = 20)
+
+## Get the last 20 bases of each chromosome:
+getSeq(genome1, start = -20)
+
+organism(genome1)
+
+methods
+
+`@instructions`
+
+
+`@hint`
+
+
+`@pre_exercise_code`
+
+```{r}
+
+```
+
+`@sample_code`
+
+```{r}
+
+```
+
+`@solution`
+
+```{r}
+
+```
+
+`@sct`
+
+```{r}
+
+```
+---
+
+## BSgenome.Scerevisiae.UCSC.sacCer3
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: 30af18e8b7
+```
+
+The BSgenome package provides support for various genomes. In Bioconductor, we have special classes for each genome, because some chromosomes can be big. Genomics and big data are two related topics. For example, most genomes can take up several GBs of memory. 
+
+If you wanted to explore the available genomes from this package:
+available.genomes()
+
+Let's explore the yeast genome (this has been already installed and loaded for you)
+yeastGenome <- BSgenome.Scerevisiae.UCSC.sacCer3
+head(seqnames(yeastGenome))
+head(seqlengths(yeastGenome))
+
+We can also look at each chromosome
+yeastGenome$chr1
+nchar(yeastGenome$chr1)
+
+`@instructions`
+
+
+`@hint`
+
+
+`@pre_exercise_code`
+
+```{r}
+
+```
+
+`@sample_code`
+
+```{r}
+
+```
+
+`@solution`
+
+```{r}
+
+```
+
+`@sct`
+
+```{r}
+
+```
+---
+
+## Letter frequency
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: e50d538177
+```
+
+There is a useful function called letterFrequency which we can use in a sequence, how would you check the frequency of CG in chromosome I?
+letterFrequency(yeastGenome$chrI, "CG") 
+That will give you the counts. If you wanted to see the percentage instead, you need to use the attribute  as.prob = TRUE.
+To check if you are correct before submitting the answer should be about %
+
+Note fill in the blanks
+Answer:
+letterFrequency(yeastGenome$chrI, "CG", as.prob = TRUE)
 
          seqnames(genome1)
 
@@ -365,23 +531,24 @@ getSeq(genome1, start = -20)
 ##  Other genomes
 
 ```yaml
-type: MultipleChoice
+type: MultipleChoiceExercise
 lang: r
 xp: 50
 skills: 1
-key: 
-```  
+key: e04e575696
+```
+
 The BSgenome package provides support for various genomes. Bioconductor 
 has saved each genome as a different package that inherits from BSgenome.
 If you want to explore the available BSgenome data packages check:
 
           available.genomes()
 
-You will see that there are many. Each of these data packages contains the genome information
-of an organism, and sometimes different versions. Because some genomes are usually big (Genomics 
-and big data are two related topics). We will keep using the S. cervisiae genome because of its
-small genome size. We loaded it again using the following code:
-
+type: MultipleChoice
+lang: r
+xp: 50
+skills: 1
+key: 4b55ffe2a2
          yeaStGenome <- getBSgenome( "BSgenome.Scerevisiae.UCSC.sacCer3")
 
 We can explore this using seqinfo(), seqnames() or seqlengths() common accessors
@@ -421,11 +588,11 @@ type: NormalExercise
 lang: r
 xp: 100
 skills: 1
-key: 
-```
-
-There is a useful function called letterFrequency which we can use in
-a sequence to find out information about frequency.
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: de71c68740
 How would you check the frequency of CG in chromosome I?
 
           letterFrequency(yeastGenome$chrI, "CG") 
@@ -433,11 +600,11 @@ How would you check the frequency of CG in chromosome I?
 That will give you the counts. If you wanted to see the percentage
 instead, you need to use the attribute as.prob = TRUE. For more information
 always check ?letterFrequency
-
-`@instructions`
-
-      What is the percentage og CG frequency in chrmI ?
-          
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: b08cbf2107
 `@hint`
 
 To check if you are correct before submitting the answer should be
