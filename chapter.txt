@@ -1,0 +1,2 @@
+ # https://combine-australia.github.io/2017-05-19-bioconductor-melbourne/strings_and_ranges.html
+ # https://bioconductor.org/packages/3.7/bioc/vignettes/GenomicRanges/inst/doc/Ten_things_slides.pdf
