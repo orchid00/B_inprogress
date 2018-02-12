@@ -1,0 +1,53 @@
+## CpG islands example
+
+```yaml
+type: PureMultipleChoiceExercise
+lang: r
+xp: 50
+skills: 1
+key: b673b200df
+```
+
+We have found the CpG islands for the zikaGenome, and then we plotted the results.
+
+From the 10 subsets which is the one with major frequency of CpG islands?
+
+![plot]("IMAGES/cpgbars.png")
+
+
+`@hint`
+Look at the larger bar
+
+`@possible_answers`
+
+- first bar
+- [second bar]
+- eighth bar
+- last bar
+
+`@feedbacks`
+
+- Not quite right
+- well done!
+- Not quite right
+- Not quite right
+
+
+```{r echo=FALSE}
+library(Biostrings)
+library(GenomicRanges)
+library(ramwas)
+library(ggplot2)
+
+zikaGenome <- readDNAStringSet("data/zika_genomic.fna.gz")
+names(zikaGenome) <- "NC_012532.1"
+cpgset <-  getCpGsetCG(zikaGenome)
+cpgset             
+class(cpgset)
+cpgset <- as.data.frame(cpgset)
+
+
+ggplot(data = cpgset, mapping = aes(x = NC_012532.1)) +
+  geom_histogram(fill = "navy", color = "gray", bins = 10) +
+  theme_bw()
+```
