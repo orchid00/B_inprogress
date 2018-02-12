@@ -51,3 +51,6 @@ ggplot(data = cpgset, mapping = aes(x = NC_012532.1)) +
   geom_histogram(fill = "navy", color = "gray", bins = 10) +
   theme_bw()
 ```
+
+
+# http://web.mit.edu/~r/current/arch/i386_linux26/lib/R/library/Biostrings/html/XString-class.html
