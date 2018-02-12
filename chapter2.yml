@@ -1,0 +1,344 @@
+---
+title: Biostrings and when to use them?
+description: >-
+  Biostrings are memory efficient string containers. Biostring has matching algorithms, and other utilities, for fast manipulation of large biological sequences or sets of sequences.
+
+
+---
+## Introduction to Biostrings and XStrings
+
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: ae4f2e36f1
+```
+
+`@projector_key`
+undefined
+
+---
+## Exploring the basics of the Zika virus sequence
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: 69e501cbe7
+```
+
+We are now working with the Zika virus Genome, named here `zikaGenome`. The genome was downloaded from [NCBI](https://www.ncbi.nlm.nih.gov/genome/?term=zika).
+
+To investigate the `zikaGenome` using the package Biostrings. 
+Let's check its accessors
+
+    alphabet()
+    alphabetFrequency()
+
+`@instructions`
+Try to answer these questions using the console
+- What letters are included in the zikaGenome?
+- Which ones are the relevant letters in the sequence?
+- Test alphabet with the attribute `baseOnly = TRUE`, what difference do you see?
+
+`@hint`
+Test each of the functions and think about the data stored in the zika genome
+
+`@pre_exercise_code`
+```{r}
+library(Biostrings)
+library(GenomicRanges)
+# load the zikaGenome
+zikaGenome <- readDNAStringSet("data/zika_genomic.fna.gz")
+```
+`@sample_code`
+```{r}
+# Check the alphabet of the zikaGenome
+
+# Check the alphabetFrequency of the zikaGenome
+
+# Check the alphabet of the zikaGenome again using baseOnly = TRUE, what are your thoughts?
+```
+`@solution`
+```{r}
+alphabet(zikaGenome)
+alphabetFrequency(zikaGenome)
+alphabet(zikaGenome, baseOnly = TRUE)
+```
+`@sct`
+```{r}
+success_msg("Keep going like that that you will get very far!")
+```
+
+
+
+---
+## Common manipulation functions for DNA sequences
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: 63376294ab
+```
+
+To start familiarizing yourself with manipulation functions, we will learn about 
+`reverse()`
+`complement()`
+`reverseComplement()`
+`translate()`
+
+For you to see clearly the results, we will use a subset of the Zika Genome that has only 50 bases,
+the object is called `subZika`
+
+`@instructions`
+Now test your knowledge
+- reverse the sequence
+- Complement of the sequence
+- reverse complement
+- translate the sequence
+
+
+`@pre_exercise_code`
+```{r}
+library(Biostrings)
+library(GenomicRanges)
+# load the zikaGenome
+zikaGenome <- readDNAStringSet("data/zika_genomic.fna.gz")
+names(zikaGenome) <- "NC_012532.1"
+# subset with GRanges
+myRanges <- GRanges(seqnames = c("NC_012532.1"),
+                      ranges = IRanges(start = c(1),
+                                       width = c(50)))
+subZika <- zikaGenome[myRanges]
+```
+`@sample_code`
+```{r}
+# The reverse of subZika is
+
+# The complement of subZika is
+
+# The reverse complement of subZika is
+
+# The translation of subZika is
+```
+`@solution`
+```{r}
+reverse(subZika)
+complement(subZika)
+reverseComplement(subZika)
+translate(subZika)
+```
+`@sct`
+```{r}
+success_msg("You are doing great!")
+```
+
+
+
+---
+## Subclases of Biostrings: XString, DNAString, RNAString, and AAString
+
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: 8c1487c26f
+```
+
+`@projector_key`
+undefined
+
+---
+## Check Biostrings
+
+```yaml
+type: MultipleChoiceExercise
+lang: r
+xp: 50
+skills: 1
+key: c2a1db0caa
+```
+
+could you guess and test what is the class of the object sequence `zikaGenome`?
+
+`@instructions`
+- DNAStringSet
+- RNAStringSet
+- AAStringSet
+
+`@hint`
+The object zikaGenome is loaded for you, use the function `class` to check.
+
+`@pre_exercise_code`
+```{r}
+library(Biostrings)
+library(GenomicRanges)
+# load the zikaGenome
+zikaGenome <- readDNAStringSet("data/zika_genomic.fna.gz")
+names(zikaGenome) <- "NC_012532.1"
+```
+
+
+`@sct`
+```{r}
+msg1 <- "Correct. The zikaGenome has been read into a DNAStringSet"
+msg2 <- "Incorrect. The zikaGenome is not an RNAString Set"
+msg3 <- "Incorrect. The zikaGenome is not an Amino Acid String Set. Keep trying."
+test_mc(1, feedback_msgs = c(msg1, msg2, msg3))
+```
+
+
+
+---
+## Why are we interested in patterns?
+
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: 8f045f3c8f
+```
+
+`@projector_key`
+undefined
+
+---
+## How to use matchPattern
+
+```yaml
+type: MultipleChoiceExercise
+lang: r
+xp: 50
+skills: 1
+key: f227d4ef54
+```
+
+By now, you are familiar with the zikaGenome so now, let's find a pattern.
+Since we are using a BSgenome Set we can look for patterns with `vmatchPattern`.
+Note you can also use `matchPattern` from `BioStrings` is you are not working with string Sets
+
+    matchPattern("AAAAAAAAAA", zikaGenome, max.mismatch = 1)
+
+How many matches do we get?
+
+`@instructions`
+- 1
+- 2
+- many
+
+`@hint`
+After runing the code, you will get an IRanges object with some matches, How many?
+
+`@pre_exercise_code`
+```{r}
+library(Biostrings)
+library(GenomicRanges)
+# load the zikaGenome
+zikaGenome <- readDNAStringSet("data/zika_genomic.fna.gz")
+```
+
+
+`@sct`
+```{r}
+msg1 <- "Incorrect. Not quite right, keep trying"
+msg2 <- "Correct. Congratulations, you got it!"
+msg3 <- "Incorrect. You should get a finite number"
+test_mc(1, feedback_msgs = c(msg1, msg2, msg3))
+```
+
+
+
+---
+## How to  find Palindromes
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: 619b623320
+```
+
+To find palindromes we will select the first 500 base pairs of the first and only sequence of the 
+zikaGenome convertng it to a BString
+
+    zikaSingleSeq <- BString(x = zikaGenome$NC_012532.1, 
+                             start = 1, nchar = 500)
+
+Now, you can use the function `findPalindromes()`
+
+`@instructions`
+- Find the palindromes in `zikaSingleSeq`
+- Stop to check how long are these palindromes and where are they located
+
+`@hint`
+As a result you should get 9 palindromes
+
+`@pre_exercise_code`
+```{r}
+library(Biostrings)
+library(GenomicRanges)
+zikaGenome <- readDNAStringSet("data/zika_genomic.fna.gz")
+names(zikaGenome) <- "NC_012532.1"
+zikaSingleSeq <- BString(x = zikaGenome$NC_012532.1, start = 1,
+                         nchar = 500)
+```
+
+`@solution`
+```{r}
+findPalindromes(zikaSingleSeq)
+```
+`@sct`
+```{r}
+success_msg("Well done!")
+```
+
+
+
+---
+## What are CpG islands?
+
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: b580aae4d7
+```
+
+`@projector_key`
+undefined
+
+---
+## CpG islands example
+
+```yaml
+type: PureMultipleChoiceExercise
+lang: r
+xp: 50
+skills: 1
+key: b673b200df
+```
+
+We have found the CpG islands for the zikaGenome, and then we plotted the results.
+
+From the 10 subsets which is the one with major frequency of CpG islands?
+
+![plot](http://)
+
+
+`@hint`
+Look at the larger bar
+
+
+
+
+
+
+
