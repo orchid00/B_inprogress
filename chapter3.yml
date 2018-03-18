@@ -1,0 +1,540 @@
+---
+title: IRanges and GenomicRanges
+description: >-
+  The GenomicRanges package is a container for storing and manipulating genomic intervals 
+  and variables defined along a genome. It is built on top of the IRanges infrastructure 
+  and supports many other Bioconductor packages, like BSgenome.
+---
+
+## IRanges
+
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: 06f4c6239e
+```
+Infrastructure for manipulating intervals on sequences
+
+`@projector_key`
+undefined
+
+---
+
+
+## Interacting with IRanges
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: 8d584b652d
+```
+
+We can create `IRanges` function by specifying the two basic parameters
+start and either end or width of the range. You can use a single value or a vector of values.
+
+```{r}
+(IRanges(start = 10, end = 37))
+```
+
+Note: width = end - start + 1. 
+ 
+We can create many ranges at the same time too.  
+
+```{r}
+(IRanges(start = c(5, 35, 50),
+         end = c(12, 39, 61),
+         names = LETTERS[1:3]))
+```
+    
+`@instructions`
+- Create a variable name `mySeqs` as an IRanges object
+- The start of the sequences are: 10 18 19
+- The end for each seq is: 100 200 320
+- The names are: "chr1" "chr2" "chr3"
+- Print the newly created variable
+
+`@hint`
+- Follow the format
+```{r}
+mySeqs <- IRanges(start = NULL, end = NULL, width = NULL, names = NULL)
+```
+- Remember to use `c` for combining values
+
+
+`@pre_exercise_code`
+```{r}
+```
+
+`@sample_code`
+```{r}
+library(IRanges)
+# create mySeqs
+
+# print mySeqs
+```
+
+`@solution`
+```{r}
+library(IRanges)
+
+mySeqs <- IRanges(
+            start = c(10, 18, 19),
+            end = c(100, 200, 320),
+            names = c("chr1", "chr2", "chr3"))
+mySeqs                     
+```
+
+`@sct`
+```{r}
+test_error()
+test_object("mySeqs",
+            undefined_msg = "Make sure to define `mySeqs`!",
+            incorrect_msg = "Have you correctly assigned the start, end and names to `mySeqs`!")
+success_msg("Awesome! This way you can customize your IRanges objects.")
+```
+
+---
+
+## Genomic Ranges structure
+
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: 6f485c7ce0
+```
+
+`@projector_key`
+undefined
+
+---
+## Creating a customized genomic object using Genomic Ranges
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: 2f42e964ee
+```
+
+To create a GenomicRanges or `GRanges` we need to specify at least seqnames and ranges. 
+There are multiple ways to create GRanges object. 
+
+Let's use a `data.frame` as this is most likely where you have your ranges stored
+This `data.frame` will contain three columns seqnames, start and end.
+
+Then we can convert this `data.frame` into `GRanges` using:
+
+```{r}
+gr_df <- as(df, "GRanges")
+gr_df
+```
+
+`@instructions`
+It is your turn to try.
+- use the `data.frame` called `df` created for you
+- print `df` to see how it looks
+- Convert df into a `GRanges` object, call the new object `myGR`
+- print `myGR`
+
+`@hint`
+- Remember to coerce `df` using `as`
+
+`@pre_exercise_code`
+
+`@sample_code`
+```{r}
+library(GenomicRanges)
+df <- data.frame(
+      seqnames = "chrI", 
+      start = 11:15, 
+      end = 35:39)
+# print df
+
+# create myGR
+
+# print myGR
+```
+
+`@solution`
+```{r}
+library(GenomicRanges)
+df <- data.frame(
+      seqnames = "chrI", 
+      start = 11:15, 
+      end = 35:39)
+# print df      
+df
+# create myGR
+myGR <- as(df, "GRanges")
+# print myGR
+myGR
+```
+
+
+`@sct`
+```{r}
+success_msg("Very nice! you can now start creating GRanges from your existing datasets. If you are familiar 
+             with tibbles, the same can be applied, you can use your tibbles instead of data.frames")
+```
+
+---
+## Checking accessors of GR
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: def335d378
+```
+
+In the previous exercise, we created a `GRanges` object with the minimun information. But, `GRanges` can 
+store much more information. 
+
+We created for you a made-up `GRanges` object to investigate using accessor
+methods. So, you can check the number of chromosomes, the number of sequences stored in the `GRanges` object, the names
+of each sequence, information about strand, score, length and more.
+
+The following are some of the basic accessors for `GRanges`
+```{r}
+seqnames(gr)
+ranges(gr)
+mcols(gr)
+genome(gr)
+seqinfo(gr)
+```
+for a complete list of accessors, you can check `methods(class = "GRanges")`
+
+`@instructions`
+Use the objecte `myGR` created for you
+1. Get information about the sequences in `myGR` using `seqnames`
+2. Check the IRanges without metadata using `ranges`
+3. Now check the metadata using `mcols`
+4. Add a name to the genome accessor uing `genome(myGR) <- "Test"`
+5. Get the information about the underlying sequences using `seqinfo`
+
+`@hint`
+
+
+`@pre_exercise_code`
+```{r}
+
+```
+
+`@sample_code`
+```{r}
+library(GenomicRanges)
+# a Genomic Ranges object created for you
+myGR <- GRanges(
+  seqnames = Rle(c("chr1", "chr2", "chr3"), 
+                 c(3, 3, 2)),
+  ranges = IRanges(start = seq(10, 80, by = 10), 
+                   end = seq(19, 89, by = 10), 
+                   names = letters[1:8]),
+  strand = Rle(strand(c("-", "+", "*", "+")), 
+               c(1, 2, 2, 3)),
+  score = 1:8,
+  GC = seq(1, 0, length = 8),
+  seqlengths = c(chr1 = 100, chr2 = 150 , chr3 = 300)
+)
+
+# print the GRanges object
+myGR
+# 1. Check seqnames
+
+# 2. Check ranges of the object
+
+# 3. Check the metadata, if any
+
+# 4. Assing a name to our made-up genome
+
+# 5. Check seqinfo
+```
+
+`@solution`
+```{r}
+library(GenomicRanges)
+# a Genomic Ranges object created for you
+myGR <- GRanges(
+  seqnames = Rle(c("chr1", "chr2", "chr3"), 
+                 c(3, 3, 2)),
+  ranges = IRanges(start = seq(10, 80, by = 10), 
+                   end = seq(19, 89, by = 10), 
+                   names = letters[1:8]),
+  strand = Rle(strand(c("-", "+", "*", "+")), 
+               c(1, 2, 2, 3)),
+  score = 1:8,
+  GC = seq(1, 0, length = 8),
+  seqlengths = c(chr1 = 100, chr2 = 150 , chr3 = 300)
+)
+
+# print the GRanges object
+myGR
+# 1. Check seqnames
+seqnames(myGR)
+# 2. Check ranges of the object
+ranges(myGR)
+# 3. Check the metadata, if any
+mcols(myGR)
+# 4. Assing a name to our made-up genome
+genome(myGR) <- "Test"
+# 5. Check seqinfo
+seqinfo(myGR)
+```
+
+`@sct`
+```{r}
+success_msg("Good job!, Remember to check methods(class = \"GRanges\") if you want to find other accessors.")
+```
+
+---
+## A sequence window
+
+```yaml
+type: MultipleChoiceExercise
+lang: r
+xp: 50
+skills: 1
+key: 5a012f235e
+```
+Sometimes we want to create a sliding window to check our sequences. Genomic Ranges provides us with the method
+`slidingWindows`. This will generate sliding windows in a `GRanges` object of a specified `width` and frequency, called `step`.
+
+`slidingWindows(x, width, step=1L)`
+
+Having the object
+```{r}
+ranges(ABCD1)
+```
+IRanges object with 1 range and 0 metadata columns:
+          start       end     width
+      <integer> <integer> <integer>
+  215 153724868 153744762     19895
+  
+ 
+
+`@instructions`
+Having a GRanges object called ABCD1, gene id 215 of length 19895.
+The minimun number allowed for a window is a distance of 1 between the start positions, step = 1. 
+If we wanted exactly 2 windows using step = 1.
+What will be the maximun number allowed for the width of a window.
+
+`@hint`
+
+`@possible_answers`
+- The length of the genome
+- [The length of the GRanges object -1]
+- The length of the GRanges object
+- Any length
+
+`@pre_exercise_code`
+```{r}
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+# updated March 17
+hg <- TxDb.Hsapiens.UCSC.hg38.knownGene
+seqlevels(hg) <- c("chrX")
+hgChrX <- genes(hg)
+ABCD1 <- hgChrX[hgChrX$gene_id == "215"]
+ABCD1
+ranges(ABCD1)
+
+# Create two sliding windows
+mywindows <- slidingWindows(ABCD1, width = ___, step = 1 )
+mywindows
+```
+
+`@sct`
+```{r}
+msg1 <- "Incorrect. The length of the genome will be much longer than the length of our gene of interest "
+msg2 <- "Correct! The length of the gene -1 will allow us to have at least 2 windows. The length of the last window can be partial "
+msg3 <- "Incorrect. If we use exactly the same length of the gene in width, then we do not get more windows. "
+msg4 <- "Incorrect. If we choose a width lower than the length of the GRanges object we will have many more windows"
+test_mc(2, feedback_msgs = c(msg1, msg2, msg3, msg4))
+```
+
+
+---
+## What can we find on a GRangesList
+
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: e0aed830b5
+```
+
+`@projector_key`
+undefined
+
+---
+## Testing accessors
+
+```yaml
+type: MultipleChoiceExercise
+lang: r
+xp: 50
+skills: 1
+key: 95b5169650
+```
+
+Using GRangesLists also comes with useful accessor functions, almost all the accessors 
+from IRanges can be used for lists too but the result will be a list.
+You can find them using the function `methods(class = "GRangesList")`.
+
+Let's explore chromosome X genes `hgChrX`, and a hypothetical gene of interest `geneOfInterest`.
+Using the function `overlapsAny` between the `hgChrX` and `geneOfInterest`
+Do we find any overlapping ranges?
+`@instructions`
+- `overlapsAny(hgChrX, geneOfInterest)` for all genes will result in a list of `TRUE` and `FALSE`
+- `table` helps us count the values 
+
+
+`@hint`
+enclose `table` to the resulting list
+
+`@possible_answers`
+- No
+- [Yes]
+
+`@pre_exercise_code`
+```{r}
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+# updated March 17
+hg <- TxDb.Hsapiens.UCSC.hg38.knownGene
+seqlevels(hg) <- c("chrX")
+hgChrX <- transcriptsBy(hg, by = "gene")
+class(hgChrX)
+geneOfInterest <- hgChrX$`215`
+geneOfInterest <- geneOfInterest[1]
+geneOfInterest
+```
+
+`@sct`
+```{r}
+msg1 <- "Incorrect. Try again"
+msg2 <- "Correct! Yes! our gene of interest overlaps somewhere in chromosome X. In the next exercise you will find out where"
+test_mc(2, feedback_msgs = c(msg1, msg2))
+```
+
+
+
+---
+## Checking for overlaps between sequences
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: e4479f9c6e
+```
+
+Now that we know that is an overlap between chromosome X and the gene of interest, we can check where
+
+`@instructions`
+- Use the function `subsetByOverlaps` to subset hgChrX with its overlapping region of the `geneOfInterest`
+- store the overlapping range in rangefound
+- check `names` of rangefound
+- check the `geneOfInterest` and `rangefound`
+
+`@hint`
+
+`@pre_exercise_code`
+```{r}
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+# updated March 17
+hg <- TxDb.Hsapiens.UCSC.hg38.knownGene
+seqlevels(hg) <- c("chrX")
+hgChrX <- transcriptsBy(hg, by = "gene")
+class(hgChrX)
+geneOfInterest <- hgChrX$`215`
+geneOfInterest <- geneOfInterest[1]
+geneOfInterest
+```
+
+`@sample_code`
+```{r}
+# Store the overlapping range in rangefound
+___ <- subsetByOverlaps()
+# Check names of rangefound
+
+# Check the geneOfInterest 
+
+# Check rangefound
+```
+
+`@solution`
+```{r}
+rangefound <- subsetByOverlaps(hgChrX, geneOfInterest)
+# Check names of rangefound
+names(rangefound)
+# Check the geneOfInterest 
+geneOfInterest
+# Check rangefound
+rangefound
+```
+
+
+`@sct`
+```{r}
+success_msg("Good job! you did pretty well our gene of interest it's called 215")
+```
+
+
+
+---
+## How to convert a GRangesList object into a GRanges object
+
+```yaml
+type: MultipleChoiceExercise
+lang: r
+xp: 50
+skills: 1
+key: 6037171647
+```
+
+The `unlist` operation is fast, and serves to partition a GRangesList. 
+
+We will unlist the `` and then check the object lengths difference of the GRangesList and the GRanges 
+`@instructions`
+- `unlist` `hgChrX` and save a new object called myGR 
+- Check the `class` of both objects
+- Check the `lengths` of both objects
+- Is the length of the GRanges object larger than the GRangesList?
+
+`@hint`
+Remember that each element in a list has one or more ranges
+
+
+`@pre_exercise_code`
+```{r}
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+# updated March 17
+hg <- TxDb.Hsapiens.UCSC.hg38.knownGene
+seqlevels(hg) <- c("chrX")
+hgChrX <- transcriptsBy(hg, by = "gene")
+class(hgChrX)
+length(hgChrX)
+```
+`@possible_answers`
+
+- [Yes]
+- No
+
+`@sct`
+```{r}
+msg1 <- "Correct! Yes! because the GRanges has now all of the ranges in the elements of the list "
+msg2 <- "Incorrect. A GRanges object derived from a GRangesList can only have the same or larger length"
+test_mc(1, feedback_msgs = c(msg1, msg2))
+```
+
+
+
