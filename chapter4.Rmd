@@ -1,0 +1,498 @@
+---
+title: Introduction to the shortread package
+description: >-
+  For fasta and fastq files input and manipulation, we can trim and filter the
+  sequence of interest and even do a report of quality. We will be reinforcing
+  what we have learned in the previous chapter using DNAStringSets. For this
+  chapter we will use a section of a plant genome, how exciting! 
+---
+
+## Introducing Arabidopsis
+
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: 6030fad6ef
+```
+
+Plant genomes are usually very big, so today we are going to study a small genome model, *Arabidopsis thaliana*. 
+Even this genome is quite large to be use as an example, hence we will be looking at a particular sequence.
+The mitochrondrion, also known as the cellular respiration fabric.
+
+
+Notes: fastq files are usually large so processing involves iteration in parts or chunks
+For the exercises we will use a small fastq sample which fits into memory and can be read entirely using
+readFastq
+
+
+`@video_link`
+
+//player.vimeo.com/video/154783078
+
+`@video_hls`
+
+//videos.datacamp.com/transcoded/000_placeholders/v1/hls-temp.master.m3u8
+---
+
+## Reading in files
+
+```yaml
+type: PureMultipleChoiceExercise
+key: cea89eb81b
+xp: 50
+skills: 1
+```
+
+Here you will learn the difference between fasta and fastq files and what information can be stored in those files.
+We will use the package `ShortRead` and its functions `readFastq` and `readFasta`
+
+Read the documentation and check the arguments for each function.
+[readFasta](https://www.rdocumentation.org/packages/ShortRead/versions/1.30.0/topics/readFasta)
+and [readFastq](https://www.rdocumentation.org/packages/ShortRead/versions/1.30.0/topics/readFastq)
+
+`@possible_answers`
+After reading the documentation, which arguments in particular are used for reading Fastq files?
+a. pattern
+b. filter
+c. qualityType
+d. a and b
+[e. b and c]
+
+`@hint`
+Compare the arguments sections
+
+`@feedbacks`
+
+- a is not correct, pattern is for both
+- b is not correct! filter is for fastq but there is one more parameter
+- c is not correct! quality type is for fastq but there is one more parameter
+- d is not correct, pattern is for both but filter is for fastq
+- e is correct!, these arguments are special for fastq files
+
+---
+
+## Exploring a fastq file
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: e514219731
+```
+
+We will read in the sample fastq file from the Athaliana.
+
+```{r}
+SampleFQ_1 <- readFastq("data", pattern = "Sample_ERR1830498_1.fastq")
+SampleFQ_1
+class(SampleFQ_1)
+```
+
+This is a `ShortReadQ` and contains information about reads, quality scores, and ids.
+
+`@instructions`
+Try checking the fastq object
+- Check `sread` of `SampleFQ_1`, enclosed in `class`. What kind of object is this?
+- Check `id` of `SampleFQ_1`
+
+`@hint`
+
+
+`@pre_exercise_code`
+```{r}
+library(ShortRead)
+```
+
+`@sample_code`
+
+```{r}
+library(ShortRead)
+SampleFQ_1 <- readFastq("data", pattern = "Sample_ERR1830498_1.fastq")
+SampleFQ_1
+class(SampleFQ_1)
+
+# Check sread and class
+
+# Check id
+```
+
+`@solution`
+
+```{r}
+library(ShortRead)
+
+SampleFQ_1 <- readFastq("data", pattern = "Sample_ERR1830498_1.fastq")
+SampleFQ_1
+class(SampleFQ_1)
+
+# Check sread class
+class(sread(SampleFQ_1))
+# Check id
+id(SampleFQ_1)
+```
+
+`@sct`
+
+```{r}
+success_msg("Well done! You can now re use what you learned in the previous chapters")
+```
+---
+
+## Checking out sequences and quality
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: ceb7411665
+```
+fastq files encode quality scores on a `BStringSet` instance of class `FastqQuality` 
+
+```{r}
+quality(SampleFQ_1) 
+```
+In the video we mentioned that we are using Illumina sequences for this example, and quality encoding will
+vary depending on the platform. For more information you can check [Illumina Quality Score Encoding](https://support.illumina.com/help/BaseSpace_OLH_009008/Content/Source/Informatics/BS/QualityScoreEncoding_swBS.htm)
+
+We are going to perform a simple quality control check on the raw sequence data. This is an important check
+to quickly find out whether the data has any problems of which we should be aware before doing any analysis. 
+To check the enconding values for each letter in quality use `encoding`
+```{r}
+encoding(quality(SampleFQ_1))
+```
+
+Now let's let's do a quality assessment (QA) stored in `qaSummary`
+```{r}
+qaSummary <- qa(SampleFQ_1, type = "fastq", lane = 1)
+```
+
+QA elements can be accessed with qaSummary[["nameElement"]])
+`@instructions`
+- It is your turn to test selecting the element `baseQuality` from `qaSummary`
+- For this encoding the maximun score is 40, everything above 33 is considered of good quality.
+You should check for symbols B, C, D, E, F, G, H, I
+- Would you say this sequence has good quality based on the counts?
+
+`@hint`
+
+
+`@pre_exercise_code`
+
+```{r}
+
+```
+
+`@sample_code`
+
+```{r}
+library(ShortRead)
+
+SampleFQ_1 <- readFastq("data", pattern = "Sample_ERR1830498_1.fastq")
+SampleFQ_1
+class(SampleFQ_1)
+# Check quality
+quality(SampleFQ_1)
+# Check encoding
+encoding(quality(SampleFQ_1))
+# Quality assessment summary
+qaSummary <- qa(SampleFQ_1, type = "fastq", lane = 1)
+# Check baseQuality
+```
+
+`@solution`
+
+```{r}
+library(ShortRead)
+
+SampleFQ_1 <- readFastq("data", pattern = "Sample_ERR1830498_1.fastq")
+SampleFQ_1
+class(SampleFQ_1)
+# Check quality
+quality(SampleFQ_1)
+# Check encoding
+encoding(quality(SampleFQ_1))
+# Quality assessment summary
+qaSummary <- qa(SampleFQ_1, type = "fastq", lane = 1)
+# Check baseQuality
+head(qaSummary[["baseQuality"]])
+```
+
+`@sct`
+
+```{r}
+success_msg("Excellent! there are many more resources to check the quality of your sequences, but remember this is an important step. You can also have a look at browseURL(report(qaSummary))")
+```
+---
+
+## Filtering and trimming
+
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: 897ebfdde6
+```
+
+Most of the time sequences need to be filtered and trimmed. This is usually done to preserve those sequences with better quality. for example those sequences that are full of N's
+
+`@video_link`
+
+//player.vimeo.com/video/154783078
+
+`@video_hls`
+
+//videos.datacamp.com/transcoded/000_placeholders/v1/hls-temp.master.m3u8
+
+
+---
+## Base quality plot
+
+```yaml
+type: PureMultipleChoiceExercise
+key: 9388e2a3fd
+xp: 50
+skills: 1
+```
+Let's check the values of each symbol again from here 
+[](https://support.illumina.com/help/BaseSpace_OLH_009008/Content/Source/Informatics/BS/QualityScoreEncoding_swBS.htm)
+
+[Figure](http://s3.amazonaws.com/assets.datacamp.com/production/course_7720/datasets/baseQuality.png)
+
+Which ones are the three most representative scores?
+
+`@possible_answers`
+- F, G, H
+- [37, 38, 39]
+- > 40
+
+`@hint`
+
+`@feedbacks`
+- 1. is not correct
+- 2. is correct!
+- 3. is not correct
+---
+
+## filtering
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: dbd1b89171
+```
+
+let's check the function srFilter
+
+https://www.rdocumentation.org/packages/ShortRead/versions/1.30.0/topics/srFilter
+
+As we can see there are different filters available. We will use `nFilter` which selects elements
+with fewer than threshold 'N' symbols in each element of sread(x).
+
+
+
+`@instructions`
+
+Your task is to complete the following function
+`@hint`
+
+
+`@pre_exercise_code`
+
+```{r}
+
+```
+
+`@sample_code`
+
+```{r}
+myfilter <- srFilter(function(x){
+        substr(sread(x), 1,5) == "TAGCT"
+        },name="MyFilter")
+
+myreads <- reads[myfilter(reads)]
+```
+
+`@solution`
+
+```{r}
+myfilter <- srFilter(function(x){
+        substr(sread(x), 1,5) == "TAGCT"
+        },name="MyFilter")
+
+myreads <- reads[myfilter(reads)]
+```
+
+`@sct`
+
+```{r}
+success_msg("Good job!")
+```
+---
+## Matching and counting
+
+```yaml
+type: VideoExercise
+lang: r
+xp: 50
+skills: 1
+key: 5aaaa15b24
+```
+
+NGS methods are not perfect. They occasionally call a base wrongly, and occasionally mess up a read by missing a base, or by inserting an extra base into the read. If we exactly match, we are going to miss all of the reads which aren’t quite right, and as we are matching to quite a long sequence (20 bases), that may well correspond to a lot of reads. What we really want to do is allow an imperfect match, allowing, say 1 base to be wrong, or one indel.
+
+`@video_link`
+
+//player.vimeo.com/video/154783078
+
+`@video_hls`
+
+//videos.datacamp.com/transcoded/000_placeholders/v1/hls-temp.master.m3u8
+---
+
+## Looking for matching sequences
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: 9dd579ab06
+```
+
+```{r}
+countA <- alphabetFrequency(sread(fq))[,"A"] 
+fqNoPolyA <- fq[countA < 35]
+```
+
+`@instructions`
+
+
+`@hint`
+
+
+`@pre_exercise_code`
+
+```{r}
+
+```
+
+`@sample_code`
+
+```{r}
+
+```
+
+`@solution`
+
+```{r}
+
+```
+
+`@sct`
+
+```{r}
+success_msg("Good job!")
+```
+---
+
+## unexact matching
+
+```yaml
+type: MultipleChoiceExercise
+lang: r
+xp: 50
+skills: 1
+key: c18fd2b952
+```
+
+We can do that with the following:
+
+```{r}
+hits <- vcountPattern("AGACGATCACCATTCGATGC", dict,
+                        max.mismatch = 1, with.indels = TRUE)
+sum(hits)
+```
+
+to see the hits we can use
+
+```{r}
+sread(reads[hits])
+```
+
+
+
+`@instructions`
+Which answer is the correct one
+
+`@hint`
+
+
+`@pre_exercise_code`
+
+```{r}
+
+```
+
+`@sct`
+
+```{r}
+success_msg("Good job!")
+```
+---
+
+## Occurrences using tables
+
+```yaml
+type: NormalExercise
+lang: r
+xp: 100
+skills: 1
+key: 502f86d0e1
+```
+
+```{r}
+ tbls <- tables(fq)
+> names(tbls)
+[1] "top"          "distribution"
+> tbls$top[1:5]
+
+> head(tbls$distribution)
+nOccurrences nReads
+```
+
+`@instructions`
+
+
+`@hint`
+
+
+`@pre_exercise_code`
+
+```{r}
+
+```
+
+`@sample_code`
+
+```{r}
+
+```
+
+`@solution`
+
+```{r}
+
+```
+
+`@sct`
+
+```{r}
+success_msg("Good job!")
+```
